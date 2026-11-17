@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#050806">
+  <meta name="description" content="Página de apresentação de Pedro Silva, estudante de Análise e Desenvolvimento de Sistemas.">
+  <title>Pedro Silva | Student ADS</title>
+  <style>
+    :root {
+      --bg: #050806;
+      --surface: rgba(14, 24, 17, 0.82);
+      --surface-strong: #101912;
+      --green: #38f58a;
+      --green-soft: #9afbc3;
+      --text: #edf8f1;
+      --muted: #9aaba0;
+      --border: rgba(56, 245, 138, 0.18);
+      --shadow: rgba(56, 245, 138, 0.16);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      overflow-x: hidden;
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(56, 245, 138, 0.10), transparent 24rem),
+        linear-gradient(135deg, #020403 0%, var(--bg) 55%, #08110b 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(56, 245, 138, 0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(56, 245, 138, 0.025) 1px, transparent 1px);
+      background-size: 34px 34px;
+      mask-image: linear-gradient(to bottom, black, transparent 85%);
+    }
+
+    .orb {
+      position: fixed;
+      width: 20rem;
+      height: 20rem;
+      z-index: -1;
+      border-radius: 50%;
+      background: rgba(56, 245, 138, 0.07);
+      filter: blur(65px);
+      pointer-events: none;
+      transform: translate(var(--x, 0), var(--y, 0));
+      transition: transform 120ms linear;
+    }
+
+    .container {
+      width: min(1120px, calc(100% - 40px));
+      margin-inline: auto;
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 82px;
+    }
+
+    .brand {
+      color: var(--text);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      text-decoration: none;
+    }
+
+    .brand span { color: var(--green); }
+
+    .nav-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.82rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .nav-status::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 14px var(--green);
+      animation: pulse 2s infinite;
+    }
+
+    main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
+      align-items: center;
+      gap: clamp(40px, 8vw, 100px);
+      min-height: calc(100vh - 82px);
+      padding: 50px 0 100px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      color: var(--green-soft);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 38px;
+      height: 2px;
+      background: var(--green);
+      box-shadow: 0 0 12px var(--green);
+    }
+
+    h1 {
+      max-width: 760px;
+      margin: 0;
+      font-size: clamp(3.5rem, 8vw, 7.2rem);
+      line-height: 0.88;
+      letter-spacing: -0.075em;
+    }
+
+    h1 span {
+      display: block;
+      color: var(--green);
+      text-shadow: 0 0 35px rgba(56, 245, 138, 0.16);
+    }
+
+    .intro {
+      max-width: 650px;
+      margin: 28px 0 34px;
+      color: var(--muted);
+      font-size: clamp(1rem, 2vw, 1.16rem);
+      line-height: 1.75;
+    }
+
+    .role {
+      color: var(--text);
+      font-weight: 700;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 20px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.02);
+      font-weight: 800;
+      text-decoration: none;
+      transition: 180ms ease;
+    }
+
+    .button.primary {
+      border-color: var(--green);
+      color: #041109;
+      background: var(--green);
+      box-shadow: 0 12px 32px rgba(56, 245, 138, 0.12);
+    }
+
+    .button:hover {
+      transform: translateY(-3px);
+      border-color: var(--green);
+      box-shadow: 0 14px 35px var(--shadow);
+    }
+
+    .profile-card {
+      position: relative;
+      display: grid;
+      place-items: center;
+      aspect-ratio: 0.82;
+      max-height: 530px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background:
+        linear-gradient(145deg, rgba(56, 245, 138, 0.08), transparent 42%),
+        var(--surface);
+      box-shadow: 0 28px 80px rgba(0, 0, 0, 0.42);
+      backdrop-filter: blur(14px);
+    }
+
+    .profile-card::before,
+    .profile-card::after {
+      content: "";
+      position: absolute;
+      width: 34px;
+      height: 34px;
+      border-color: var(--green);
+    }
+
+    .profile-card::before {
+      top: 16px;
+      left: 16px;
+      border-top: 2px solid;
+      border-left: 2px solid;
+    }
+
+    .profile-card::after {
+      right: 16px;
+      bottom: 16px;
+      border-right: 2px solid;
+      border-bottom: 2px solid;
+    }
+
+    .avatar {
+      display: grid;
+      place-items: center;
+      width: min(68%, 240px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(56, 245, 138, 0.38);
+      border-radius: 50%;
+      color: var(--green);
+      background:
+        radial-gradient(circle at 50% 38%, rgba(56, 245, 138, 0.12), transparent 38%),
+        #09110c;
+      box-shadow:
+        0 0 0 12px rgba(56, 245, 138, 0.025),
+        0 0 55px rgba(56, 245, 138, 0.10);
+      font-size: clamp(4rem, 9vw, 7.5rem);
+      font-weight: 900;
+      letter-spacing: -0.12em;
+    }
+
+    .card-label {
+      position: absolute;
+      bottom: 42px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: max-content;
+      color: var(--muted);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .card-label strong {
+      color: var(--green-soft);
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(18px);
+      animation: reveal 700ms ease forwards;
+    }
+
+    .reveal-delay { animation-delay: 180ms; }
+
+    @keyframes reveal {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes pulse {
+      50% { opacity: 0.45; box-shadow: 0 0 4px var(--green); }
+    }
+
+    @media (max-width: 800px) {
+      .container { width: min(100% - 32px, 1120px); }
+      nav { height: 70px; }
+      main {
+        grid-template-columns: 1fr;
+        min-height: auto;
+        padding: 54px 0 70px;
+      }
+      .profile-card {
+        width: min(390px, 100%);
+        max-height: none;
+        justify-self: center;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .nav-status { display: none; }
+      h1 { font-size: clamp(3.3rem, 18vw, 5.2rem); }
+      .actions { flex-direction: column; }
+      .button { width: 100%; }
+      .profile-card { aspect-ratio: 0.9; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="orb" aria-hidden="true"></div>
+
+  <header class="container">
+    <nav aria-label="Navegação principal">
+      <a class="brand" href="#inicio">PEDRO<span>.DEV</span></a>
+      <span class="nav-status">Disponível para aprender</span>
+    </nav>
+  </header>
+
+  <main class="container" id="inicio">
+    <section class="reveal" aria-labelledby="titulo-principal">
+      <p class="eyebrow">Primeiro semestre • ADS</p>
+      <h1 id="titulo-principal">Pedro <span>Silva</span></h1>
+      <p class="intro">
+        Sou o Pedro, tenho 20 anos de idade, sou estudante de
+        <strong>Análise e Desenvolvimento de Sistemas</strong> e estou no primeiro semestre.
+        Atualmente atuo como <span class="role">Auxiliar de Almoxarifado</span>.
+      </p>
+      <div class="actions">
+        <a class="button primary" href="https://github.com/Pedrosilva-20" target="_blank" rel="noopener noreferrer">
+          Ver GitHub
+        </a>
+        <a class="button" href="mailto:">Entrar em contato</a>
+      </div>
+    </section>
+
+    <aside class="profile-card reveal reveal-delay" aria-label="Monograma de Pedro Silva">
+      <div class="avatar" aria-hidden="true">PS</div>
+      <div class="card-label"><strong>Pedro Silva</strong> // ADS</div>
+    </aside>
+  </main>
+
+  <script>
+    const orb = document.querySelector('.orb');
+
+    window.addEventListener('pointermove', (event) => {
+      const x = event.clientX - 160;
+      const y = event.clientY - 160;
+      orb.style.setProperty('--x', `${x}px`);
+      orb.style.setProperty('--y', `${y}px`);
+    }, { passive: true });
+
+    const card = document.querySelector('.profile-card');
+
+    if (window.matchMedia('(pointer: fine)').matches) {
+      card.addEventListener('pointermove', (event) => {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width - 0.5;
+        const y = (event.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(800px) rotateY(${x * 5}deg) rotateX(${y * -5}deg) translateY(-4px)`;
+      });
+
+      card.addEventListener('pointerleave', () => {
+        card.style.transform = '';
+      });
+    }
+  </script>
+</body>
+</html>
